@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android_EULA</string>
+    <string name="app_name">EduTAB Firewall</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -29,6 +29,7 @@
     <string name="menu_vpn_settings">Open VPN settings</string>
     <string name="menu_support">Support</string>
     <string name="menu_about">About</string>
+    <string name="vpn_msg">VPN connection will be set up that allows EduTAB to monitor network traffic. It will ensure security and privacy of your device.</string>
 
     <string name="msg_sure">Are you sure?</string>
 

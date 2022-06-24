@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ public class Third_frag extends Fragment {
     WebView eula_agree;
     Button third_to_forth;
     CheckBox agree;
+    ProgressBar loading;
 
     public Third_frag() {
         // Required empty public constructor
@@ -48,6 +50,8 @@ public class Third_frag extends Fragment {
 
         activity.next.setText("Finish");
 
+        loading = view.findViewById(R.id.loading_web);
+        loading.setVisibility(View.VISIBLE);
         third_to_forth = view.findViewById(R.id.third_to_forth);
 
         eula_agree = view.findViewById(R.id.eula_agree);
@@ -55,6 +59,8 @@ public class Third_frag extends Fragment {
         agree = view.findViewById(R.id.checkBox);
 
         eula_agree.loadUrl("file:///android_asset/eula_agreement.html");
+
+        loading.setVisibility(View.GONE);
 
         third_to_forth.setOnClickListener(new View.OnClickListener() {
             @Override

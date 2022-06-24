@@ -13,9 +13,10 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_icon1"
+        android:configChanges="orientation|screenSize"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_icon1"
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/AppTheme">
@@ -39,12 +40,8 @@
             android:name="com.example.android_eula.firewallminor.ActivityMain"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
-            android:exported="true">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            android:exported="true"
+            android:excludeFromRecents="true">
         </activity>
 
         <receiver
@@ -67,7 +64,7 @@
         <receiver android:name=".ResetBroadCastReceiver"
             android:exported="true">
 
-            <intent-filter android:priority="900">
+            <intent-filter android:priority="999">
                 <action android:name="android.intent.action.DEVICE_ADMIN_ENABLED" />
                 <action android:name="android.intent.action.PROFILE_PROVISIONING_COMPLETE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -85,14 +82,14 @@
                 android:value="true"/>
         </service>
 
-        <receiver android:name="com.example.android_eula.firewallminor.Receiver"
+        <!--<receiver android:name="com.example.android_eula.firewallminor.Receiver"
             android:exported="true">
-            <intent-filter android:priority="800">
+            <intent-filter android:priority="900">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.SCREEN_ON"/>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
     </application>
 

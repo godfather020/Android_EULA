@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.example.android_eula"
         minSdk 19
-        targetSdk 32
+        targetSdk 19
         versionCode 1
         versionName "1.0"
 
@@ -26,6 +26,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+//key-alias = "eula"
+//key-pass = 12345678
 
 dependencies {
 

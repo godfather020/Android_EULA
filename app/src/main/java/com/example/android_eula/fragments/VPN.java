@@ -34,7 +34,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android_eula.DashboardActivity;
@@ -55,9 +58,13 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
     private boolean running = false;
     private RuleAdapter adapter = null;
     private MenuItem searchItem = null;
-    private Button finish_btn;
+    Button finish_btn;
     DashboardActivity activity;
     public RecyclerView rvApplication;
+    Button close;
+    TextView app_name, vpn_msg;
+    ImageView app_img;
+    LinearLayout layout_one, layout_vpn;
 
     private static final int REQUEST_VPN = 1;
 
@@ -101,21 +108,6 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         intentFilter.addDataScheme("package");
         activity.registerReceiver(packageChangedReceiver, intentFilter);
-
-        Intent prepare = VpnService.prepare(requireContext());
-        if (prepare == null) {
-            Log.e(TAG, "Prepare done");
-            onActivityResult(REQUEST_VPN, RESULT_OK, null);
-        } else {
-            Log.i(TAG, "Start intent=" + prepare);
-            try {
-                startActivityForResult(prepare, REQUEST_VPN);
-            } catch (Throwable ex) {
-                Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
-                onActivityResult(REQUEST_VPN, RESULT_CANCELED, null);
-                Toast.makeText(requireContext(), ex.toString(), Toast.LENGTH_LONG).show();
-            }
-        }
 
         //swEnabled.toggle();
         swEnabled.setOnClickListener(new View.OnClickListener() {
@@ -178,14 +170,6 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
         intentFilter.addDataScheme("package");
         registerReceiver(packageChangedReceiver, intentFilter);*/
 
-        if (requireContext().getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0) == 1) {
-
-            requireContext().getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
-            //stopLockTask();
-
-        }
-
-
     }
 
     @Override
@@ -196,12 +180,65 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
 
         rvApplication = view.findViewById(R.id.rvApplication);
         finish_btn = view.findViewById(R.id.first_to_second);
+        close = view.findViewById(R.id.finish_btn);
+        vpn_msg = view.findViewById(R.id.vpn_msg);
+        app_name = view.findViewById(R.id.app_name);
+        app_img = view.findViewById(R.id.app_img);
+        layout_one = view.findViewById(R.id.layout_first);
+        layout_vpn = view.findViewById(R.id.layout_vpn);
+
+        Log.d("rebootVPN1", String.valueOf(requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1)));
+
+        if (requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1) == 0){
+
+            Log.d("rebootVPN2", String.valueOf(requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1)));
+
+            close.setVisibility(View.VISIBLE);
+            vpn_msg.setVisibility(View.VISIBLE);
+            app_name.setVisibility(View.VISIBLE);
+            layout_one.setVisibility(View.GONE);
+            layout_vpn.setVisibility(View.VISIBLE);
+
+        }
+        else {
+
+            layout_one.setVisibility(View.VISIBLE);
+            layout_vpn.setVisibility(View.GONE);
+            close.setVisibility(View.GONE);
+            vpn_msg.setVisibility(View.GONE);
+            app_name.setVisibility(View.GONE);
+
+        }
+
+        Intent prepare = VpnService.prepare(requireContext());
+        if (prepare == null) {
+            Log.e(TAG, "Prepare done");
+            onActivityResult(REQUEST_VPN, RESULT_OK, null);
+        } else {
+            Log.i(TAG, "Start intent=" + prepare);
+            try {
+                startActivityForResult(prepare, REQUEST_VPN);
+            } catch (Throwable ex) {
+                Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
+                onActivityResult(REQUEST_VPN, RESULT_CANCELED, null);
+                Toast.makeText(requireContext(), ex.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                activity.askAdminPassword();
+            }
+        });
 
         finish_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
+                requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).edit().putInt("reboot", 0).apply();
+                Log.d("rebootVPN3", String.valueOf(requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1)));
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frag_cont, new Second_frag()).commit();
                 //activity.setDefaultCosuPolicies(false);
                 //stopLockTask();
@@ -441,12 +478,13 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
 
             // Start service
             if (resultCode == RESULT_OK) {
+                finish_btn.setVisibility(View.VISIBLE);
                 BlackHoleService.start(requireContext());
 
             }
             else {
-
-                Toast.makeText(requireContext(), "You must enable VPN.", Toast.LENGTH_SHORT).show();
+                finish_btn.setVisibility(View.GONE);
+                //Toast.makeText(requireContext(), "You must enable VPN.", Toast.LENGTH_SHORT).show();
                 Intent prepare = VpnService.prepare(requireContext());
                 if (prepare == null) {
                     Log.e(TAG, "Prepare done");

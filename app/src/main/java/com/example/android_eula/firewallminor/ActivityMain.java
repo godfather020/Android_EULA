@@ -47,12 +47,28 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d("app", "create");
+
+        //moveTaskToBack(true);
+
+
+
+
         Log.i(TAG, "Create");
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(prefs.getBoolean("dark_theme", false) ? R.style.AppThemeDark : R.style.AppTheme);
 
-        super.onCreate(savedInstanceState);
+
+        //int i = getIntent().getIntExtra("call_ratings_for", 0);
+
+        //if (i == 1) {
+
+
+        //}
+
+
         setContentView(R.layout.main);
 
         DashboardActivity activity = new DashboardActivity();
@@ -99,6 +115,15 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
                 Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG).show();
             }
         }
+
+        if (getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0) == 1) {
+
+            //getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
+            //stopLockTask();
+            //BlackHoleService.start(this);
+            //this.finishAndRemoveTask();
+        }
+
 
         //swEnabled.toggle();
         swEnabled.setOnClickListener(new View.OnClickListener() {
@@ -161,13 +186,6 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
         intentFilter.addDataScheme("package");
         registerReceiver(packageChangedReceiver, intentFilter);*/
 
-        if (getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0) == 1){
-
-            getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
-            //stopLockTask();
-            this.finishAndRemoveTask();
-        }
-
         finish_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,14 +206,14 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
         Log.i(TAG, "Destroy");
         //running = false;
         //PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-        unregisterReceiver(connectivityChangedReceiver);
-        unregisterReceiver(packageChangedReceiver);
+        //unregisterReceiver(connectivityChangedReceiver);
+        //unregisterReceiver(packageChangedReceiver);
 
         BlackHoleService.reload(null, this);
 
-        getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
+        //getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
 
-        Log.d("reboot", String.valueOf(getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0)));
+        //Log.d("reboot", String.valueOf(getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0)));
 
         super.onDestroy();
     }
@@ -290,6 +308,24 @@ public class ActivityMain extends AppCompatActivity implements SharedPreferences
         });
 
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("app", "resume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("app", "restart");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("app", "start");
     }
 
     @Override

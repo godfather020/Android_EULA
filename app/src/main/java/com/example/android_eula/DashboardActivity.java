@@ -208,7 +208,8 @@ public class DashboardActivity extends AppCompatActivity implements KioskInterfa
 
     if(devicePolicyManager!=null && activityManager!=null){
         ComponentName mAdminComponentName = DeviceAdminReceiver.getComponentName(DashboardActivity.this);
-        devicePolicyManager.clearPackagePersistentPreferredActivities(mAdminComponentName, getPackageName());
+            devicePolicyManager.clearPackagePersistentPreferredActivities(mAdminComponentName, getPackageName());
+
         //devicePolicyManager.clearDeviceOwnerApp(getApplication().getPackageName());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(activityManager.getLockTaskModeState()!=ActivityManager.LOCK_TASK_MODE_NONE)
@@ -415,9 +416,9 @@ public class DashboardActivity extends AppCompatActivity implements KioskInterfa
 
         BlackHoleService.reload(null, this);
 
-        getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
+        //getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
 
-        Log.d("reboot", String.valueOf(getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0)));
+        //Log.d("reboot", String.valueOf(getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0)));
 
         this.finishAndRemoveTask();
 

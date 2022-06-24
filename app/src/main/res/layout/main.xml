@@ -17,6 +17,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
         android:visibility="visible"
         android:background="@mipmap/ic_launcher"
         />
@@ -54,6 +55,10 @@
         android:textSize="16dp"
         android:textAllCaps="false"
         android:textAlignment="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:layout_marginTop="28dp"
         android:textColor="@color/white"
         android:fontFamily="@font/lato_regular"

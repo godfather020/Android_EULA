@@ -171,14 +171,14 @@ public class First_frag extends Fragment {
         Log.i("TAG", "Destroy");
         //running = false;
         //PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-        activity.unregisterReceiver(connectivityChangedReceiver);
-        activity.unregisterReceiver(packageChangedReceiver);
+        //activity.unregisterReceiver(connectivityChangedReceiver);
+        //activity.unregisterReceiver(packageChangedReceiver);
 
         BlackHoleService.reload(null, requireContext());
 
-        activity.getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
+        //activity.getSharedPreferences("reboot", MODE_PRIVATE).edit().putInt("reboot", 0).apply();
 
-        Log.d("reboot", String.valueOf(activity.getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0)));
+        //Log.d("reboot", String.valueOf(activity.getSharedPreferences("reboot", MODE_PRIVATE).getInt("reboot", 0)));
 
         super.onDestroy();
     }
