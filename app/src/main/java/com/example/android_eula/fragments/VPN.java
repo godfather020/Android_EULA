@@ -283,7 +283,7 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Received " + intent);
             Util.logExtras(TAG, intent);
-            fillApplicationList();
+            //fillApplicationList();
         }
     };
 
