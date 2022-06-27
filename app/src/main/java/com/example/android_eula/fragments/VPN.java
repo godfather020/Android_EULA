@@ -189,6 +189,8 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
 
         Log.d("rebootVPN1", String.valueOf(requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1)));
 
+        fillApplicationList();
+
         if (requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1) == 0){
 
             Log.d("rebootVPN2", String.valueOf(requireContext().getSharedPreferences("reboot", Context.MODE_PRIVATE).getInt("reboot", 1)));
@@ -289,7 +291,6 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
 
     private void fillApplicationList() {
         // Get recycler view
-
         rvApplication.setHasFixedSize(true);
         rvApplication.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -317,7 +318,7 @@ public class VPN extends Fragment implements SharedPreferences.OnSharedPreferenc
         Log.i(TAG, "Preference " + name + "=" + prefs.getAll().get(name));
         if ("enabled".equals(name)) {
             // Get enabled
-            boolean enabled = prefs.getBoolean(name, false);
+            //boolean enabled = prefs.getBoolean(name, false);
 
             // Check switch state
             //SwitchCompat swEnabled = (SwitchCompat) getSupportActionBar().getCustomView().findViewById(R.id.swEnabled);
